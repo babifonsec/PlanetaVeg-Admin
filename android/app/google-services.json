@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "1047071948038",
+    "project_id": "key-conquest-385415",
+    "storage_bucket": "key-conquest-385415.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1047071948038:android:5a5d79b82261068d57f287",
+        "android_client_info": {
+          "package_name": "com.example.planetaveg"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1047071948038-op40joef4so9mbtd2oi8rgqj9rool8ku.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAf-KDw0FeiCTI1rRXJBJlg3GfiopFfx3Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1047071948038-op40joef4so9mbtd2oi8rgqj9rool8ku.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1047071948038:android:7647835b2ded33a557f287",
+        "android_client_info": {
+          "package_name": "com.example.pvadmin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1047071948038-op40joef4so9mbtd2oi8rgqj9rool8ku.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAf-KDw0FeiCTI1rRXJBJlg3GfiopFfx3Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1047071948038-op40joef4so9mbtd2oi8rgqj9rool8ku.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
