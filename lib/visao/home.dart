@@ -4,6 +4,9 @@ import 'package:provider/provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:pvadmin/database/dbHelper.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:pvadmin/visao/endereco/create.dart';
+import 'package:pvadmin/visao/endereco/edit.dart';
+import 'package:pvadmin/visao/endereco/index.dart';
 import 'package:pvadmin/visao/loja/index.dart';
 import 'package:pvadmin/visao/produtos/index.dart';
 import 'package:pvadmin/visao/promocao/index.dart';
@@ -86,7 +89,7 @@ class _HomeState extends State<Home> {
                       borderRadius: BorderRadius.circular(60),
                       color: Color.fromARGB(255, 216, 216, 216),
                     ),
-                    child: imageUrl == null
+                    child: imageUrl == ""
                         ? Icon(
                             Icons.person,
                             size: 60,
@@ -122,18 +125,21 @@ class _HomeState extends State<Home> {
                               ),
                             );
                           },
-                          child: Text(
-                            nome,
-                            style: TextStyle(
-                              fontSize: 13,
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              nome,
+                              style: TextStyle(
+                                fontSize: 13,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
                         ),
                       ),
                       Text(
-                        '   Administrador',
+                        '  Administrador',
                         style: TextStyle(
                           fontSize: 12,
                         ),
@@ -154,6 +160,20 @@ class _HomeState extends State<Home> {
                   MaterialPageRoute(
                     builder: (context) =>
                         LojaIndex(context.read<AuthService>()),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              leading: Icon(
+                Icons.home,
+                color: Color(0xFF7A8727),
+              ),
+              title: Text('Endereços'),
+              onTap: () {
+                Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => EnderecosIndex(),
                   ),
                 );
               },

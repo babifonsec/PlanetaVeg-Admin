@@ -7,13 +7,14 @@ class LojaController with ChangeNotifier {
       FirebaseFirestore.instance.collection('lojas');
 
   // Adiciona um novo loja ao Firestore
-  Future<void> adicionarLoja(Loja loja) async {
-    try {
-      await _lojasCollection.add(loja.toMap());
-    } catch (e) {
-      print('Erro ao adicionar o loja: $e');
-    }
+Future<void> adicionarOuAtualizarLoja(String uid,Loja loja) async {
+  try {
+    // Use o ID da loja como identificador único
+    await _lojasCollection.doc(uid).set(loja.toMap());
+  } catch (e) {
+    print('Erro ao adicionar/atualizar a loja: $e');
   }
+}
 
   // Atualiza os dados de um loja no Firestore
   Future<void> atualizarLoja(String lojaUid, Loja loja) async {

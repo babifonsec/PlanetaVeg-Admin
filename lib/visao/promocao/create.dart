@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pvadmin/controle/CategoriaController.dart';
 import 'package:pvadmin/database/dbHelper.dart';
 import 'package:pvadmin/modelo/Categoria.dart';
@@ -40,7 +41,6 @@ class _PromocaoCreateState extends State<PromocaoCreate> {
   final dataExpiracaoController = TextEditingController();
   PromocaoController promocao = PromocaoController();
   CategoriaController categoria = CategoriaController();
-
 
   @override
   Widget build(BuildContext context) {
@@ -243,17 +243,25 @@ class _PromocaoCreateState extends State<PromocaoCreate> {
                     width: 160,
                     child: OutlinedButton(
                       onPressed: () {
-                       
                         promocao.adicionarPromocao(
                           Promocao(
                             precoController.text,
                             promocaoImageUrl,
-                              nomeController.text,
-                              descricaoController.text,
-                              ingredientesController.text,
-                              uidCategoriaController.text,
-                               user!.uid,
-                              ),
+                            nomeController.text,
+                            descricaoController.text,
+                            ingredientesController.text,
+                            uidCategoriaController.text,
+                            user!.uid,
+                          ),
+                        );
+                        Fluttertoast.showToast(
+                          msg: "Promoção cadastrada com sucesso",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.BOTTOM,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: Color(0xFF672F67),
+                          textColor: Colors.white,
+                          fontSize: 16.0,
                         );
                       },
                       child: Text(
@@ -324,5 +332,4 @@ class _PromocaoCreateState extends State<PromocaoCreate> {
       });
     }
   }
-
 }

@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pvadmin/controle/LojaController.dart';
 import 'package:pvadmin/database/dbHelper.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -24,7 +25,7 @@ class _LojaIndexState extends State<LojaIndex> {
   final nomeController = TextEditingController();
   final telefoneController = TextEditingController();
   final cnpjController = TextEditingController();
-   User? user = FirebaseAuth.instance.currentUser;
+  User? user = FirebaseAuth.instance.currentUser;
 
   FirebaseStorage storage = FBStorage.get(); //recupera a instancia do storage
   FirebaseFirestore db = DBFirestore.get(); //recupera a instancia do firestore
@@ -184,7 +185,6 @@ class _LojaIndexState extends State<LojaIndex> {
                     controller: nomeController,
                     decoration: InputDecoration(
                       labelText: 'Nome',
-                      
                       suffixIcon: Icon(Icons.edit),
                     ),
                   ),
@@ -198,7 +198,6 @@ class _LojaIndexState extends State<LojaIndex> {
                     keyboardType: TextInputType.phone,
                     decoration: InputDecoration(
                       labelText: 'Telefone',
-                  
                       suffixIcon: Icon(Icons.edit),
                     ),
                   ),
@@ -213,43 +212,51 @@ class _LojaIndexState extends State<LojaIndex> {
                     enabled: !cnpjController.text.isNotEmpty,
                     decoration: InputDecoration(
                       labelText: 'CNPJ',
-                 
                       suffixIcon: Icon(Icons.edit),
                     ),
                   ),
                 ),
               ),
               Padding(
-                  padding: EdgeInsets.all(10),
-                  child: Container(
-                    width: 160,
-                    child: OutlinedButton(
-                      onPressed: () {
-                        context.read<LojaController>().atualizarLoja(user!.uid
-                              ,Loja(nomeController.text, cnpjController.text,
-                                  telefoneController.text, imageUrl),
-                            );
-                      },
-                      child: Text(
-                        'Salvar',
-                        style: TextStyle(
-                          color: Colors.white,
-                        ),
+                padding: EdgeInsets.all(10),
+                child: Container(
+                  width: 160,
+                  child: OutlinedButton(
+                    onPressed: () {
+                      context.read<LojaController>().adicionarOuAtualizarLoja(
+                            user!.uid,
+                            Loja(nomeController.text, cnpjController.text,
+                                telefoneController.text, lojaImageUrl),
+                          );
+                          Fluttertoast.showToast(
+                    msg: "Perfil atualizado com sucesso",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.BOTTOM,
+                    timeInSecForIosWeb: 1,
+                    backgroundColor: Color(0xFF672F67),
+                    textColor: Colors.white,
+                    fontSize: 16.0,
+                  );
+                    },
+                    child: Text(
+                      'Salvar',
+                      style: TextStyle(
+                        color: Colors.white,
                       ),
-                      style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all<Color>(Color(0xFF7A8727)),
-                        fixedSize:
-                            MaterialStateProperty.all<Size>(Size(180, 50)),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20.0),
-                          ),
+                    ),
+                    style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Color(0xFF7A8727)),
+                      fixedSize: MaterialStateProperty.all<Size>(Size(180, 50)),
+                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20.0),
                         ),
                       ),
                     ),
-                  )),
+                  ),
+                ),
+              ),
             ],
           ),
         ),

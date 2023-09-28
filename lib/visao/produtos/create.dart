@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:pvadmin/controle/CategoriaController.dart';
 import 'package:pvadmin/database/dbHelper.dart';
 import 'package:pvadmin/modelo/Categoria.dart';
@@ -250,6 +251,15 @@ class _ProdutosCreateState extends State<ProdutosCreate> {
                               user!.uid,
                               uidCategoriaController.text),
                         );
+                         Fluttertoast.showToast(
+                    msg: "Produto adicionado com sucesso!",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.BOTTOM,
+                    timeInSecForIosWeb: 1,
+                    backgroundColor: Color(0xFF672F67),
+                    textColor: Colors.white,
+                    fontSize: 16.0,
+                  );
                       },
                       child: Text(
                         'Salvar',

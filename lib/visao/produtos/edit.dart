@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pvadmin/database/dbHelper.dart';
 import 'package:pvadmin/controle/CategoriaController.dart';
@@ -257,6 +258,15 @@ class _ProdutosEditState extends State<ProdutosEdit> {
                               user!.uid,
                               uidCategoriaController.text),
                         );
+                         Fluttertoast.showToast(
+                    msg: "Produto atualizado com sucesso",
+                    toastLength: Toast.LENGTH_SHORT,
+                    gravity: ToastGravity.BOTTOM,
+                    timeInSecForIosWeb: 1,
+                    backgroundColor: Color(0xFF672F67),
+                    textColor: Colors.white,
+                    fontSize: 16.0,
+                  );
                       },
                       child: Text(
                         'Salvar',
