@@ -1,5 +1,5 @@
 class Produto {
- // late String _id;
+  // late String _id;
   late String _nome;
   late String _descricao;
   late String _ingredientes;
@@ -7,9 +7,10 @@ class Produto {
   late String _imagem;
   late String _uidLoja;
   late String _uidCategoria;
+  late String _uidClassificacao;
 
-  Produto(this._nome, this._descricao, this._ingredientes,
-      this._preco, this._imagem, this._uidLoja, this._uidCategoria);
+  Produto(this._nome, this._descricao, this._ingredientes, this._preco,
+      this._imagem, this._uidLoja, this._uidCategoria, this._uidClassificacao);
 
   Produto.map(dynamic obj) {
     //this._id = obj['id'];
@@ -20,9 +21,10 @@ class Produto {
     this._imagem = obj['imagem'];
     this._uidLoja = obj['uidLoja'];
     this._uidCategoria = obj['uidCategoria'];
+    this._uidCategoria = obj['uidClassificacao'];
   }
 
- // String get id => _id;
+  // String get id => _id;
   String get nome => _nome;
   String get descricao => _descricao;
   String get ingredientes => _ingredientes;
@@ -30,12 +32,13 @@ class Produto {
   String get imagem => _imagem;
   String get uidLoja => _uidLoja;
   String get uidCategoria => _uidCategoria;
+  String get uidClassificacao => _uidClassificacao;
 
   // Converte o objeto Loja em um mapa que pode ser armazenado no Firestore
   Map<String, dynamic> toMap() {
     var map = new Map<String, dynamic>();
 
-   /* if (_id != null) {
+    /* if (_id != null) {
       map['id'] = _id;
     }*/
     map['nome'] = _nome;
@@ -45,6 +48,7 @@ class Produto {
     map['imagem'] = _imagem;
     map['uidLoja'] = _uidLoja;
     map['uidCategoria'] = _uidCategoria;
+    map['uidClassificacao'] = _uidClassificacao;
     return map;
   }
 
@@ -57,5 +61,6 @@ class Produto {
     this._imagem = map['imagem'] ?? '';
     this._uidLoja = map['uidLoja'] ?? '';
     this._uidCategoria = map['uidCategoria'] ?? '';
+    this._uidClassificacao = map['uidClassificacao'] ?? '';
   }
 }

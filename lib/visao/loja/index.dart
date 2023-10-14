@@ -1,5 +1,8 @@
 import 'dart:io';
+import 'package:brasil_fields/brasil_fields.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:pvadmin/controle/LojaController.dart';
 import 'package:pvadmin/database/dbHelper.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -194,6 +197,10 @@ class _LojaIndexState extends State<LojaIndex> {
                 padding: EdgeInsets.all(10),
                 child: Container(
                   child: TextFormField(
+                    inputFormatters: [
+                      FilteringTextInputFormatter.digitsOnly,
+                      TelefoneInputFormatter(),
+                    ],
                     controller: telefoneController,
                     keyboardType: TextInputType.phone,
                     decoration: InputDecoration(
@@ -207,9 +214,13 @@ class _LojaIndexState extends State<LojaIndex> {
                 padding: EdgeInsets.all(10),
                 child: Container(
                   child: TextFormField(
+                    inputFormatters: [
+                      FilteringTextInputFormatter.digitsOnly,
+                      CnpjInputFormatter(),
+                    ],
                     keyboardType: TextInputType.number,
                     controller: cnpjController,
-                    enabled: !cnpjController.text.isNotEmpty,
+                  
                     decoration: InputDecoration(
                       labelText: 'CNPJ',
                       suffixIcon: Icon(Icons.edit),
@@ -223,20 +234,32 @@ class _LojaIndexState extends State<LojaIndex> {
                   width: 160,
                   child: OutlinedButton(
                     onPressed: () {
-                      context.read<LojaController>().adicionarOuAtualizarLoja(
-                            user!.uid,
-                            Loja(nomeController.text, cnpjController.text,
-                                telefoneController.text, lojaImageUrl),
-                          );
-                          Fluttertoast.showToast(
-                    msg: "Perfil atualizado com sucesso",
-                    toastLength: Toast.LENGTH_SHORT,
-                    gravity: ToastGravity.BOTTOM,
-                    timeInSecForIosWeb: 1,
-                    backgroundColor: Color(0xFF672F67),
-                    textColor: Colors.white,
-                    fontSize: 16.0,
-                  );
+                      if (GetUtils.isCnpj(cnpjController.text)) {
+                        context.read<LojaController>().adicionarOuAtualizarLoja(
+                              user!.uid,
+                              Loja(nomeController.text, cnpjController.text,
+                                  telefoneController.text, lojaImageUrl),
+                            );
+                        Fluttertoast.showToast(
+                          msg: "Perfil atualizado com sucesso",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.BOTTOM,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: Color(0xFF672F67),
+                          textColor: Colors.white,
+                          fontSize: 16.0,
+                        );
+                      } else {
+                        Fluttertoast.showToast(
+                          msg: "CNPJ Inválido",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.BOTTOM,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: Color(0xFF672F67),
+                          textColor: Colors.white,
+                          fontSize: 16.0,
+                        );
+                      }
                     },
                     child: Text(
                       'Salvar',

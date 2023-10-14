@@ -6,10 +6,12 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:pvadmin/controle/ClassificacaoController.dart';
 import 'package:pvadmin/database/dbHelper.dart';
 import 'package:pvadmin/controle/CategoriaController.dart';
 import 'package:pvadmin/controle/ProdutoController.dart';
 import 'package:pvadmin/modelo/Categoria.dart';
+import 'package:pvadmin/modelo/Classificacao.dart';
 import 'package:pvadmin/modelo/Produto.dart';
 
 class ProdutosEdit extends StatefulWidget {
@@ -37,9 +39,15 @@ class _ProdutosEditState extends State<ProdutosEdit> {
   TextEditingController ingredientesController = TextEditingController();
   TextEditingController precoController = TextEditingController();
   TextEditingController imagemController = TextEditingController();
+  final uidClassificacaoController = TextEditingController();
   TextEditingController uidCategoriaController = TextEditingController();
   ProdutoController produto = ProdutoController();
   CategoriaController categoria = CategoriaController();
+  ClassificacaoController classificacao = ClassificacaoController();
+
+  String? uidClassificacao;
+  List<DropdownMenuItem<String>> classificacaoItens = [];
+  String classificacaoNome = '';
 
   @override
   void initState() {
@@ -242,6 +250,53 @@ class _ProdutosEditState extends State<ProdutosEdit> {
               ),
               Padding(
                 padding: EdgeInsets.all(10),
+                child: StreamBuilder<List<Classificacao>>(
+                  stream: classificacao.getclassificacaos(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return Text('Erro: ${snapshot.error}');
+                    }
+
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return CircularProgressIndicator();
+                    }
+
+                    // Quando os dados estiverem disponíveis, atualize a lista
+                    classificacaoItens =
+                        (snapshot.data ?? []).map((classificacao) {
+                      return DropdownMenuItem(
+                        value: classificacao.id,
+                        child: Text(classificacao.nome),
+                      );
+                    }).toList();
+
+                    return Container(
+                      child: DropdownButtonFormField<String>(
+                        value: uidClassificacao,
+                        items: classificacaoItens,
+                        onChanged: (value) {
+                          setState(() async {
+                            //OBSERVAR O SET STATE ASYNC
+                            categoriaSnapshot = await db
+                                .collection('classificacao')
+                                .doc(value)
+                                .get();
+                            classificacaoNome = categoriaSnapshot.get('nome');
+                            uidClassificacao = value;
+                            uidClassificacaoController.text = value ?? '';
+                          });
+                        },
+                        decoration: InputDecoration(
+                          labelText: 'Classificação',
+                          hintText: classificacaoNome,
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.all(10),
                 child: Center(
                   child: Container(
                     width: 160,
@@ -256,17 +311,18 @@ class _ProdutosEditState extends State<ProdutosEdit> {
                               precoController.text,
                               produtoImageUrl,
                               user!.uid,
-                              uidCategoriaController.text),
+                              uidCategoriaController.text,
+                              uidClassificacaoController.text),
                         );
-                         Fluttertoast.showToast(
-                    msg: "Produto atualizado com sucesso",
-                    toastLength: Toast.LENGTH_SHORT,
-                    gravity: ToastGravity.BOTTOM,
-                    timeInSecForIosWeb: 1,
-                    backgroundColor: Color(0xFF672F67),
-                    textColor: Colors.white,
-                    fontSize: 16.0,
-                  );
+                        Fluttertoast.showToast(
+                          msg: "Produto atualizado com sucesso",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.BOTTOM,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: Color(0xFF672F67),
+                          textColor: Colors.white,
+                          fontSize: 16.0,
+                        );
                       },
                       child: Text(
                         'Salvar',

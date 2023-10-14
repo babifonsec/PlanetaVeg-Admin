@@ -1,7 +1,9 @@
-
+import 'package:brasil_fields/brasil_fields.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:get/get.dart';
 import 'package:pvadmin/database/dbHelper.dart';
 import 'package:pvadmin/modelo/Endereco.dart';
 import 'package:pvadmin/controle/EnderecoController.dart';
@@ -33,11 +35,9 @@ class _EnderecosCreateState extends State<EnderecosCreate> {
   final complementoController = TextEditingController();
   final cepController = TextEditingController();
   EnderecoController endereco = EnderecoController();
- 
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.white),
@@ -60,7 +60,6 @@ class _EnderecosCreateState extends State<EnderecosCreate> {
                   ),
                 ),
               ),
-              
               Padding(
                 padding: EdgeInsets.all(10),
                 child: Container(
@@ -130,6 +129,10 @@ class _EnderecosCreateState extends State<EnderecosCreate> {
                 padding: EdgeInsets.all(10),
                 child: Container(
                   child: TextFormField(
+                    inputFormatters: [
+                      FilteringTextInputFormatter.digitsOnly,
+                      CepInputFormatter()
+                    ],
                     keyboardType: TextInputType.number,
                     controller: cepController,
                     decoration: InputDecoration(
@@ -148,23 +151,24 @@ class _EnderecosCreateState extends State<EnderecosCreate> {
                       onPressed: () {
                         endereco.adicionarEndereco(
                           Endereco(
-                              ruaController.text,
-                              numeroController.text,
-                              bairroController.text,
-                              complementoController.text,
-                              cidadeController.text,
-                              cepController.text,
-                              auth.usuario!.uid,),
+                            ruaController.text,
+                            numeroController.text,
+                            bairroController.text,
+                            complementoController.text,
+                            cidadeController.text,
+                            cepController.text,
+                            auth.usuario!.uid,
+                          ),
                         );
-                         Fluttertoast.showToast(
-                    msg: "Endereço salvo com sucesso",
-                    toastLength: Toast.LENGTH_SHORT,
-                    gravity: ToastGravity.BOTTOM,
-                    timeInSecForIosWeb: 1,
-                    backgroundColor: Color(0xFF672F67),
-                    textColor: Colors.white,
-                    fontSize: 16.0,
-                  );
+                        Fluttertoast.showToast(
+                          msg: "Endereço salvo com sucesso",
+                          toastLength: Toast.LENGTH_SHORT,
+                          gravity: ToastGravity.BOTTOM,
+                          timeInSecForIosWeb: 1,
+                          backgroundColor: Color(0xFF672F67),
+                          textColor: Colors.white,
+                          fontSize: 16.0,
+                        );
                       },
                       child: Text(
                         'Salvar',
@@ -194,5 +198,4 @@ class _EnderecosCreateState extends State<EnderecosCreate> {
       ),
     );
   }
-
 }
