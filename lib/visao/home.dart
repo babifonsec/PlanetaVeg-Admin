@@ -61,16 +61,7 @@ class _HomeState extends State<Home> {
           color: Colors.white,
         ),
         backgroundColor: Color(0xFF672F67),
-        actions: [
-          IconButton(
-            icon: Icon(Icons.notifications),
-            onPressed: () {
-              /*Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => Notificacao(),
-                ));*/
-            },
-          ),
-        ],
+        
       ),
       drawer: Drawer(
         child: ListView(
@@ -178,14 +169,7 @@ class _HomeState extends State<Home> {
                 );
               },
             ),
-            ListTile(
-              leading: Icon(
-                Icons.settings,
-                color: Color(0xFF7A8727),
-              ),
-              title: Text('Configurações'),
-              onTap: () {},
-            ),
+            
             ListTile(
               leading: Icon(
                 Icons.logout,

@@ -28,6 +28,7 @@ class _LojaIndexState extends State<LojaIndex> {
   final nomeController = TextEditingController();
   final telefoneController = TextEditingController();
   final cnpjController = TextEditingController();
+  final horarioController = TextEditingController();
   User? user = FirebaseAuth.instance.currentUser;
 
   FirebaseStorage storage = FBStorage.get(); //recupera a instancia do storage
@@ -220,9 +221,23 @@ class _LojaIndexState extends State<LojaIndex> {
                     ],
                     keyboardType: TextInputType.number,
                     controller: cnpjController,
-                  
                     decoration: InputDecoration(
                       labelText: 'CNPJ',
+                      suffixIcon: Icon(Icons.edit),
+                    ),
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.all(10),
+                child: Container(
+                  child: TextFormField(
+                
+                    controller: horarioController,
+                    keyboardType: TextInputType.text,
+                    decoration: InputDecoration(
+                      hintText: 'Ex: 07:00 às 17:00',
+                      labelText: 'Horário de Atendimento',
                       suffixIcon: Icon(Icons.edit),
                     ),
                   ),
@@ -238,7 +253,7 @@ class _LojaIndexState extends State<LojaIndex> {
                         context.read<LojaController>().adicionarOuAtualizarLoja(
                               user!.uid,
                               Loja(nomeController.text, cnpjController.text,
-                                  telefoneController.text, lojaImageUrl),
+                                  telefoneController.text, lojaImageUrl, horarioController.text),
                             );
                         Fluttertoast.showToast(
                           msg: "Perfil atualizado com sucesso",
