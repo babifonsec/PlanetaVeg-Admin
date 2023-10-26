@@ -1,6 +1,6 @@
 # pvadmin
 
-A new Flutter project.
+Essa é a versão administrativa do app PlanetaVeg. A versão cliente pode ser encontrada no: https://github.com/babifonsec/Planeta-Veg.git
 
 ## Getting Started
 
